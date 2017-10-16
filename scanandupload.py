@@ -22,6 +22,7 @@ else:
 
 #this is an empty list for filnames to be added
 scanf = []
+scanfastf = []
 fastf = []
 f = []
 
@@ -33,6 +34,7 @@ for dir in os.listdir('/Volumes'):
         drive = dir
         for filename in glob.iglob('/Volumes/' + dir + '/**', recursive=True):
             scanf.append(filename) #add filename to list scanf
+            if(os.path.isdir(filename)): scanfastf.append(filename)
 
 ''' If the table doesn't exist for that drive, create it, if it does... delete it '''
 checktable = cnx.cursor()
@@ -51,44 +53,44 @@ checkfast.close()
 
 for file in scanf:
     line = file[9:]
-    line = bytes(line, 'utf-8').decode('utf-8', 'ignore')
     f.append(line)
-for file in f:
-    if file.endswith("/"): fastf.append(file)
+for file in scanfastf:
+    line = file[9:]
+    fastf.append(line)
 
 ''' Change that list into mySQL table format '''
 
 cursor1 = cnx.cursor()
-add_file = (
-        "INSERT INTO brandcal_archive." + drive +
-        "(`Filename`) VALUES ")
-valuestring = ""
-count = 0
-for file in f:
-    valuestring += "('" + file + "')"
-    if (count + 1 == len(f)): valuestring += ";"
-    else: valuestring += ", "
-    count += 1
-add_file += valuestring
+add_file1 = (
+        """INSERT INTO brandcal_archive.""" + drive +
+        """(`Filename`) VALUES """)
+valuestring1 = ""
+count1 = 0
+for file1 in f:
+    valuestring1 += "(\"" + file1 + "\")"
+    if (count1 + 1 == len(f)): valuestring1 += ";"
+    else: valuestring1 += ", "
+    count1 += 1
+add_file1 += valuestring1
 
 ''' And the ffast list into mySQL table format '''
 
 cursor2 = cnx.cursor()
-add_file = (
+add_file2 = (
         "INSERT INTO brandcal_archive.FAST_" + drive +
         "(`Filename`) VALUES ")
-valuestring = ""
-count = 0
-for file in fastf:
-    valuestring += "('" + file + "')"
-    if (count + 1 == len(fastf)): valuestring += ";"
-    else: valuestring += ", "
-    count += 1
-add_file += valuestring
+valuestring2 = ""
+count2 = 0
+for file2 in fastf:
+    valuestring2 += "(\"" + file2 + "\")"
+    if (count2 + 1 == len(fastf)): valuestring2 += ";"
+    else: valuestring2 += ", "
+    count2 += 1
+add_file2 += valuestring2
 
 ''' Run a mySQL command to update the table for that drive as defined by the name of the drive.'''
-cursor1.execute(add_file)
-cursor2.execute(add_file)
+cursor1.execute(add_file1)
+cursor2.execute(add_file2)
 cnx.commit()
 
 # confirm it worked to console
