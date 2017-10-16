@@ -34,13 +34,12 @@ for dir in os.listdir('/Volumes'):
         for filename in glob.iglob('/Volumes/' + dir + '/**', recursive=True):
             scanf.append(filename) #add filename to list scanf
 
-''' If the table doesn't exsist for that drive, create it, if it does... delete it '''
-#tablemaker = cnx.cursor()
-#datatomake = (
-#        "CREATE TABLE brandcal_archive." + drive +
-#        " ( `Filename` VARCHAR(255) NOT NULL ) ENGINE = InnoDB;")
+''' If the table doesn't exist for that drive, create it, if it does... delete it '''
+checktable = cnx.cursor()
 
-
+checktable.execute("DROP TABLE IF EXISTS brandcal_archive." + drive )
+checktable.execute("CREATE TABLE brandcal_archive." + drive + "( `Filename` VARCHAR(255) NOT NULL ) ENGINE = InnoDB;")
+checktable.close()
 
 ''' Prune that list of everything which isn't a directory and save it as a FAST list '''
 
