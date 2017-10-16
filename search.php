@@ -107,7 +107,7 @@ $drivecount = array(0);
 //If we're going file deep, check these tables, full of file names.
 if($depth=="file"){
     //ALL FILES
-    $tables = array("BC-0001", "BC-0002", "BC-0003", "BC-0004", "BC-0005", "BC-0006");
+    $tables = array("BC_Archive_01", "BC_Archive_02", "BC_Archive_03", "BC_Archive_04", "BC_Archive_05", "BC_Archive_06", "BC_Archive_07", "BC_Archive_08");
     $county = 1; //set to control table id through the foreach loop.
     foreach($tables as $table){
       echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Files in " . $table . "</h3><ul class='sleek'>";
@@ -130,7 +130,7 @@ if($depth=="file"){
 //otherwise check these tables, which only have directories in them
 else{
   //FOLDERS ONLY
-  $tables = array("FAST_BC1", "FAST_BC2", "FAST_BC3", "FAST_BC4", "FAST_BC5", "FAST_BC6");
+  $tables = array("FAST_BC_Archive_01", "FAST_BC_Archive_02", "FAST_BC_Archive_03", "FAST_BC_Archive_04", "FAST_BC_Archive_05", "FAST_BC_Archive_06", "FAST_BC_Archive_07", "FAST_BC_Archive_08");
   $county = 1; //set to control table id through the foreach loop.
   foreach($tables as $table){
     echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
@@ -198,7 +198,7 @@ $likelydrive = "BC-000" . $maxs[0];
   $count = 0;
 foreach($drivecount as $drive){
   if ($drive == 0){;}
-else{echo "<li class=\"hoverlight\" OnClick='document.getElementById(\"table" . $count . "\").scrollIntoView();'>BC-000" . $count . " --> " . $drive . "matches</li>";}
+else{echo "<li class=\"hoverlight\" OnClick='document.getElementById(\"table" . $count . "\").scrollIntoView();'>BC_Archive_0" . $count . " --> " . $drive . "matches</li>";}
   $count = $count + 1;
 }
 ?>
