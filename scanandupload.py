@@ -35,10 +35,10 @@ for dir in os.listdir('/Volumes'):
             scanf.append(filename) #add filename to list scanf
 
 ''' If the table doesn't exsist for that drive, create it, if it does... delete it '''
-tablemaker = cnx.cursor()
-datatomake = (
-        "CREATE TABLE brandcal_archive." + drive +
-        " ( `Filename` VARCHAR(255) NOT NULL ) ENGINE = InnoDB;")
+#tablemaker = cnx.cursor()
+#datatomake = (
+#        "CREATE TABLE brandcal_archive." + drive +
+#        " ( `Filename` VARCHAR(255) NOT NULL ) ENGINE = InnoDB;")
 
 
 
