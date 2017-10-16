@@ -82,7 +82,7 @@ add_file2 = (
 valuestring2 = ""
 count2 = 0
 for file2 in fastf:
-    valuestring2 += "(\"" + file2 + "\")"
+    valuestring2 += "(\"\"\"" + file2 + "\"\"\")"
     if (count2 + 1 == len(fastf)): valuestring2 += ";"
     else: valuestring2 += ", "
     count2 += 1
