@@ -41,15 +41,24 @@ checktable.execute("DROP TABLE IF EXISTS brandcal_archive." + drive )
 checktable.execute("CREATE TABLE brandcal_archive." + drive + "( `Filename` VARCHAR(255) NOT NULL ) ENGINE = InnoDB;")
 checktable.close()
 
+checkfast = cnx.cursor()
+
+checkfast.execute("DROP TABLE IF EXISTS brandcal_archive.FAST_" + drive )
+checkfast.execute("CREATE TABLE brandcal_archive.FAST_" + drive + "( `Filename` VARCHAR(255) NOT NULL ) ENGINE = InnoDB;")
+checkfast.close()
+
 ''' Prune that list of everything which isn't a directory and save it as a FAST list '''
 
-for file in scanf: f.append(file[9:])
+for file in scanf:
+    line = file[9:]
+    line = bytes(line, 'utf-8').decode('utf-8', 'ignore')
+    f.append(line)
 for file in f:
     if file.endswith("/"): fastf.append(file)
 
 ''' Change that list into mySQL table format '''
 
-cursor = cnx.cursor()
+cursor1 = cnx.cursor()
 add_file = (
         "INSERT INTO brandcal_archive." + drive +
         "(`Filename`) VALUES ")
@@ -62,8 +71,24 @@ for file in f:
     count += 1
 add_file += valuestring
 
+''' And the ffast list into mySQL table format '''
+
+cursor2 = cnx.cursor()
+add_file = (
+        "INSERT INTO brandcal_archive.FAST_" + drive +
+        "(`Filename`) VALUES ")
+valuestring = ""
+count = 0
+for file in fastf:
+    valuestring += "('" + file + "')"
+    if (count + 1 == len(fastf)): valuestring += ";"
+    else: valuestring += ", "
+    count += 1
+add_file += valuestring
+
 ''' Run a mySQL command to update the table for that drive as defined by the name of the drive.'''
-cursor.execute(add_file)
+cursor1.execute(add_file)
+cursor2.execute(add_file)
 cnx.commit()
 
 # confirm it worked to console
