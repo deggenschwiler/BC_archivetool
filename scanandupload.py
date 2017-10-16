@@ -52,10 +52,10 @@ checkfast.close()
 ''' Prune that list of everything which isn't a directory and save it as a FAST list '''
 
 for file in scanf:
-    line = file[9:]
+    line = file[9:].replace('"', '')
     f.append(line)
 for file in scanfastf:
-    line = file[9:]
+    line = file[9:].replace('"', '')
     fastf.append(line)
 
 ''' Change that list into mySQL table format '''
@@ -67,7 +67,7 @@ add_file1 = (
 valuestring1 = ""
 count1 = 0
 for file1 in f:
-    valuestring1 += "(\"\"\"" + file1 + "\"\"\")"
+    valuestring1 += "(\"" + file1 + "\")"
     if (count1 + 1 == len(f)): valuestring1 += ";"
     else: valuestring1 += ", "
     count1 += 1
@@ -82,7 +82,7 @@ add_file2 = (
 valuestring2 = ""
 count2 = 0
 for file2 in fastf:
-    valuestring2 += "(\"\"\"" + file2 + "\"\"\")"
+    valuestring2 += "(\"" + file2 + "\")"
     if (count2 + 1 == len(fastf)): valuestring2 += ";"
     else: valuestring2 += ", "
     count2 += 1
