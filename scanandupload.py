@@ -67,7 +67,7 @@ add_file1 = (
 valuestring1 = ""
 count1 = 0
 for file1 in f:
-    valuestring1 += "(\"" + file1 + "\")"
+    valuestring1 += "(\"\"\"" + file1 + "\"\"\")"
     if (count1 + 1 == len(f)): valuestring1 += ";"
     else: valuestring1 += ", "
     count1 += 1
