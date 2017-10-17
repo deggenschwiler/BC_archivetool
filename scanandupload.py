@@ -12,9 +12,13 @@ date file and foldr lists respectively  '''
 
 ''' Get the name of the drive to scan '''
 ''' Scan the list of files in a particular HDD, save each filename as an item in a list of Strings. '''
-
+didit = 0
 for dir in os.listdir('/Volumes'):
+    if(didit > 0): again = "next "
+    else: again = "first "
+    print("\nScanning " + again + "drive: " + dir)
     if (os.path.ismount(os.path.join('/Volumes', dir)) and dir[0] == "B" and dir[1] =="C"):
+        didit = 1
         ''' Connect to mysql database on BC '''
         try:
           cnx = mysql.connector.connect(user='brandcal_archive', password='Ut@#,5yP(?GM3P',
@@ -22,13 +26,13 @@ for dir in os.listdir('/Volumes'):
                                       database='brandcal_archive')
         except mysql.connector.Error as err:
           if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
+            print("\n  Something is wrong with your user name or password")
           elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
+            print("\n  Database does not exist")
           else:
             print(err)
         else:
-            print('Connected to mySQL db at brandcalibre')
+            print('  Connected to mySQL database at Brand Calibre')
         #this is an empty list for filnames to be added
         scanf = []
         scanfastf = []
@@ -96,6 +100,7 @@ for dir in os.listdir('/Volumes'):
         cursor2.execute(add_file2)
         cnx.commit()
         # confirm it worked to console
-        print( drive + " archive search index successfully updated.")
+        print( "  " + drive + " search index successfully updated.\n")
         cnx.close()
-print("Connection closed")
+    else: print("\nPlease rename the drive you want to add to the search tool in the format:\n\n    \"BC_Archive_XX\"\n\nwhere XX is a number between 00 and 99")
+print("\n  All done here, connection closed.\n")
