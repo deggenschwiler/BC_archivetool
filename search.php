@@ -82,7 +82,6 @@ li.hoverlight:hover{
       <input type="text" name="q" value=<?php if($searchterm == "SEARCHTERM"){echo "\"\" placeholder=\"Filename\"";}else{echo "\"" . $searchterm . "\"";}?>><br>
     <label>Deep search (files too - takes longer)</label>
       <input type="checkbox" name="deep" value="deep"<?php echo $checkornot; ?>><br><br>
-
       <input type="submit" name="submit" value="submit" class="button special">
   </form>
 <br><br><br>
@@ -104,10 +103,20 @@ if ($conn->connect_error) {
 
 $drivecount = array(0);
 
+$showtables = "SHOW tables";
+$result = $conn->query($showtables);
+$doublenumbertables = $result->num_rows;
+$numbertables = $doublenumbertables / 2;
+
 //If we're going file deep, check these tables, full of file names.
 if($depth=="file"){
     //ALL FILES
-    $tables = array("BC_Archive_01", "BC_Archive_02", "BC_Archive_03", "BC_Archive_04", "BC_Archive_05", "BC_Archive_06", "BC_Archive_07", "BC_Archive_08");
+    $tables = array();
+    for ($i = 1; $i <= $numbertables; $i++){
+      $stringy = (string) $i;
+      $tablenamepretty = "BC_Archive_" . str_pad($stringy, 2, '0', STR_PAD_LEFT);
+      array_push($tables, $tablenamepretty);
+    }
     $county = 1; //set to control table id through the foreach loop.
     foreach($tables as $table){
       $sql = "SELECT * FROM `" . $table . "` WHERE `Filename` LIKE '%" . $searchterm . "%'";
@@ -134,7 +143,12 @@ if($depth=="file"){
 //otherwise check these tables, which only have directories in them
 else{
   //FOLDERS ONLY
-  $tables = array("FAST_BC_Archive_01", "FAST_BC_Archive_02", "FAST_BC_Archive_03", "FAST_BC_Archive_04", "FAST_BC_Archive_05", "FAST_BC_Archive_06", "FAST_BC_Archive_07", "FAST_BC_Archive_08");
+  $tables = array();
+  for ($i = 1; $i <= $numbertables; $i++){
+    $stringy = (string) $i;
+    $tablenamepretty = "FAST_BC_Archive_" . str_pad($stringy, 2, '0', STR_PAD_LEFT);
+    array_push($tables, $tablenamepretty);
+  }
   $county = 1; //set to control table id through the foreach loop.
   foreach($tables as $table){
     $sql = "SELECT * FROM `" . $table . "` WHERE `Filename` LIKE '%" . $searchterm . "%'";
