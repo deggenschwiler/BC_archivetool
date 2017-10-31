@@ -110,20 +110,24 @@ if($depth=="file"){
     $tables = array("BC_Archive_01", "BC_Archive_02", "BC_Archive_03", "BC_Archive_04", "BC_Archive_05", "BC_Archive_06", "BC_Archive_07", "BC_Archive_08");
     $county = 1; //set to control table id through the foreach loop.
     foreach($tables as $table){
-      echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Files in " . $table . "</h3><ul class='sleek'>";
       $sql = "SELECT * FROM `" . $table . "` WHERE `Filename` LIKE '%" . $searchterm . "%'";
       $result = $conn->query($sql);
       $resultcount=0; //count results up from zero per table
+      if ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+      $closethis = 1;
+      echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Files in " . $table . "</h3><ul class='sleek'>";
+      }
+      else {$closethis = 0;}
       while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
           echo '<li>';
           foreach($row as $field) {
-              echo $table . "/-----------------/" . $field;
+              echo $field;
           }
           echo '</li>';
           $resultcount += 1;//add these findings to the number of found items in this table.
       }
       $drivecount[] = $resultcount;
-      echo "</ul><hr><br />";
+      if ($closethis == 1){echo "</ul><hr><br />";}
       $county = $county + 1; //increment to control table id through the foreach loop so we can pabel each table differently.
     }
 }
@@ -133,20 +137,24 @@ else{
   $tables = array("FAST_BC_Archive_01", "FAST_BC_Archive_02", "FAST_BC_Archive_03", "FAST_BC_Archive_04", "FAST_BC_Archive_05", "FAST_BC_Archive_06", "FAST_BC_Archive_07", "FAST_BC_Archive_08");
   $county = 1; //set to control table id through the foreach loop.
   foreach($tables as $table){
-    echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
     $sql = "SELECT * FROM `" . $table . "` WHERE `Filename` LIKE '%" . $searchterm . "%'";
     $result = $conn->query($sql);
     $resultcount=0; //count results up from zero per table
+    if ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+    $closethis = 1;
+    echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
+    }
+    else {$closethis = 0;}
     while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
         echo '<li>';
         foreach($row as $field) {
-            echo $table . "/-----------------/" . $field;
+            echo $field;
         }
         echo '</li>';
         $resultcount += 1; //add these findings to the number of found items in this table.
     }
     $drivecount[] = $resultcount;
-    echo "</ul><hr><br />";
+    if ($closethis == 1){echo "</ul><hr><br />";}
     $county = $county + 1; //increment to control table id through the foreach loop so we can pabel each table differently.
   }
 }
@@ -186,7 +194,7 @@ $conn->close();
 
 <?php
 $maxs = array_keys($drivecount, max($drivecount));
-$likelydrive = "BC-000" . $maxs[0];
+$likelydrive = "BC_Archive_0" . $maxs[0];
 ?>
 
 <header class="special container" style="position: absolute; top: 140px; width: 100%;<?php if($searchterm == "SEARCHTERM"){echo " display: none;";}?>">
