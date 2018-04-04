@@ -159,6 +159,7 @@ else{
     echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
     }
     else {$closethis = 0;}
+    echo "<script>alert('" + str(mysqli_fetch_array($result,MYSQLI_ASSOC)) + "')"
     while (mysqli_fetch_array($result,MYSQLI_ASSOC)){
         echo '<li>';
         foreach($row as $field) {
