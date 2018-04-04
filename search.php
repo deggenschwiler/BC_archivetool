@@ -134,7 +134,7 @@ if($depth=="file"){
           }
           echo '</li>';
           $resultcount += 1;//add these findings to the number of found items in this table.
-      } while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
+      } while($row = mysqli_fetch_array($result,MYSQLI_ASSOC));
       $drivecount[] = $resultcount;
       if ($closethis == 1){echo "</ul><hr><br />";}
       $county = $county + 1; //increment to control table id through the foreach loop so we can pabel each table differently.
