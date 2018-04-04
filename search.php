@@ -129,9 +129,9 @@ if($depth=="file"){
       else {$closethis = 0;}
       //while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
           echo '<li>';
-          //foreach($row as $field) {
-              echo $row;
-        //  }
+          foreach($row as $field) {
+              echo $field;
+          }
           echo '</li>';
           $resultcount += 1;//add these findings to the number of found items in this table.
       //}
