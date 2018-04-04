@@ -127,7 +127,7 @@ if($depth=="file"){
       echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Files in " . $table . "</h3><ul class='sleek'>";
       }
       else {$closethis = 0;}
-      while ($row){
+      while (false){
           echo '<li>';
           foreach($row as $field) {
               echo $field;
