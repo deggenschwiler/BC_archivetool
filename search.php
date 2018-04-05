@@ -91,23 +91,18 @@ li.hoverlight:hover{
   $username = "brandcal_archive";
   $password = "Ut@#,5yP(?GM3P";
   $dbname = "brandcal_archive";
-
 // Start connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 //echo "Connected successfully";
-
 $drivecount = array(0);
-
 $showtables = "SHOW tables";
 $result = $conn->query($showtables);
 $doublenumbertables = $result->num_rows;
 $numbertables = $doublenumbertables / 2;
-
 //If we're going file deep, check these tables, full of file names.
 if($depth=="file"){
     //ALL FILES
@@ -172,7 +167,6 @@ else{
     $county = $county + 1; //increment to control table id through the foreach loop so we can pabel each table differently.
   }
 }
-
 $conn->close();
 ?>
 
