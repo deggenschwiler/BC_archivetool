@@ -122,14 +122,14 @@ if($depth=="file"){
       echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Files in " . $table . "</h3><ul class='sleek'>";
       }
       else {$closethis = 0;}
-      while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+      do {
           echo '<li>';
           foreach($row as $field) {
               echo $field;
           }
           echo '</li>';
           $resultcount += 1;//add these findings to the number of found items in this table.
-      }
+      } while($row = mysqli_fetch_array($result,MYSQLI_ASSOC));
       $drivecount[] = $resultcount;
       if ($closethis == 1){echo "</ul><hr><br />";}
       $county = $county + 1; //increment to control table id through the foreach loop so we can pabel each table differently.
@@ -154,14 +154,15 @@ else{
     echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
     }
     else {$closethis = 0;}
-    while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+    do {
         echo '<li>';
+        echo $row;
         foreach($row as $field) {
             echo $field;
         }
         echo '</li>';
         $resultcount += 1; //add these findings to the number of found items in this table.
-    }
+    } while($row = mysqli_fetch_array($result,MYSQLI_ASSOC));
     $drivecount[] = $resultcount;
     if ($closethis == 1){echo "</ul><hr><br />";}
     $county = $county + 1; //increment to control table id through the foreach loop so we can pabel each table differently.
