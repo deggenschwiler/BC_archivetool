@@ -154,12 +154,14 @@ else{
     $sql = "SELECT * FROM `" . $table . "` WHERE `Filename` LIKE '%" . $searchterm . "%'";
     $result = $conn->query($sql);
     $resultcount=0; //count results up from zero per table
-    if ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
-    $closethis = 1;
-    echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
-    }
-    else {$closethis = 0;}
+    $closethis = 0;
+    $once = 1;
     while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+      if ($once == 1){
+        echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
+        $once = 0;
+      }
+
         echo '<li>';
         echo $row;
         foreach($row as $field) {
@@ -167,6 +169,7 @@ else{
         }
         echo '</li>';
         $resultcount += 1; //add these findings to the number of found items in this table.
+        $closethis = 1;
     }
     $drivecount[] = $resultcount;
     if ($closethis == 1){echo "</ul><hr><br />";}
