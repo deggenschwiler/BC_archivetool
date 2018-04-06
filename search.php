@@ -161,15 +161,13 @@ else{
         echo "<h3 style=\"padding-top: 85px;\" id=\"table" . $county . "\">Folders in " . $table . "</h3> <ul class='sleek'>";
         $once = 0;
       }
-
-        echo '<li>';
-        echo $row;
-        foreach($row as $field) {
-            echo $field;
-        }
-        echo '</li>';
-        $resultcount += 1; //add these findings to the number of found items in this table.
-        $closethis = 1;
+      echo '<li>';
+      foreach($row as $field) {
+        echo $field;
+      }
+      echo '</li>';
+      $resultcount += 1; //add these findings to the number of found items in this table.
+      $closethis = 1;
     }
     $drivecount[] = $resultcount;
     if ($closethis == 1){echo "</ul><hr><br />";}
@@ -212,7 +210,7 @@ $conn->close();
 
 <?php
 $maxs = array_keys($drivecount, max($drivecount));
-$likelydrive = "v3_BC_Archive_0" . $maxs[0];
+$likelydrive = "v4_BC_Archive_0" . $maxs[0];
 ?>
 
 <header class="special container" style="position: absolute; top: 140px; width: 100%;<?php if($searchterm == "SEARCHTERM"){echo " display: none;";}?>">
